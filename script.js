@@ -143,7 +143,7 @@ function addBlock(){
     openSlots[available-1] = pos;
     available--;
 
-    //set block 'pos' to have the text "2"
+    //set block 'pos' to be visable
     gameBlocks[pos].style.opacity = 1;
 
     //add 2 with 75% chance, 4 with 20% chance, 8 with 5% chance
