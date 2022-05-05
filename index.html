@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2048 game</title>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>2048 Game</h1>
+    <div class = "gameStats">
+        <div class = "score"></div> 
+        <div class = "highScore">High Score: 0</div>
+    </div>
+    <div class = "gameOver">
+        <div class = "endMessage"></div>
+        <div class = "reset">
+            <button class="resetButton" onclick="resetGame()">New Game</button>
+        </div>
+    </div>
+    <main class="game"> </main>
+  </body>
+</html>
