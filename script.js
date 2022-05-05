@@ -63,8 +63,21 @@ var available = NUMBLOCKS;
 var openSlots = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 //variable to keep track of the score
 var score = 0;
+
+
 //variable to store users best score
-var highScore = 0;
+function setHighScore(newScore){
+   localStorage.setItem("highScore", newScore);
+}
+function getHighScore(){
+    return localStorage.getItem("highScore");
+}
+if(localStorage.getItem("highScore") === null){
+    setHighScore(0);
+}
+var highScore = getHighScore();
+document.querySelector(".highScore").innerText = "High Score: " + getHighScore();
+
 //boolean value to state if the game is over
 var gameOver = false;
 //variable to keep track of time passed
@@ -178,6 +191,7 @@ function moveUp(){
                 //position above is the same number so combine them
                 if(current === above && current != "0"){
                     //combine with block above
+                    score += parseInt(gameBlocks[positionMap2D[row-1][col]].innerText) * 2;
                     gameBlocks[positionMap2D[row-1][col]].innerText = parseInt(gameBlocks[positionMap2D[row-1][col]].innerText) * 2;
                     gameBlocks[positionMap2D[row-1][col]].style.opacity = "1";
                     updateColour(gameBlocks[positionMap2D[row-1][col]]);
@@ -214,6 +228,7 @@ function moveDown(){
                 //position below is the same number so combine them
                 if(current === below && current != "0"){
                     //combine with block below
+                    score += parseInt(gameBlocks[positionMap2D[row+1][col]].innerText) * 2;
                     gameBlocks[positionMap2D[row+1][col]].innerText = parseInt(gameBlocks[positionMap2D[row+1][col]].innerText) * 2;
                     gameBlocks[positionMap2D[row+1][col]].style.opacity = "1";
                     updateColour(gameBlocks[positionMap2D[row+1][col]]);
@@ -250,6 +265,7 @@ function moveLeft(){
                 //position left is the same number so combine them
                 if(current === left && current != "0"){
                     //combine with block to the left
+                    score += parseInt(gameBlocks[positionMap2D[row][col-1]].innerText) * 2;
                     gameBlocks[positionMap2D[row][col-1]].innerText = parseInt(gameBlocks[positionMap2D[row][col-1]].innerText) * 2;
                     gameBlocks[positionMap2D[row][col-1]].style.opacity = "1";
                     updateColour( gameBlocks[positionMap2D[row][col-1]]);
@@ -286,6 +302,7 @@ function moveRight(){
                 //position right is the same number so combine them
                 if(current === right && current != "0"){
                     //combine with block to the right
+                    score += parseInt(gameBlocks[positionMap2D[row][col+1]].innerText) * 2;
                     gameBlocks[positionMap2D[row][col+1]].innerText = parseInt(gameBlocks[positionMap2D[row][col+1]].innerText) * 2;
                     gameBlocks[positionMap2D[row][col+1]].style.opacity = "1";
                     updateColour( gameBlocks[positionMap2D[row][col+1]]);
@@ -335,10 +352,10 @@ function resetGame(){
     updateSlots();  
     addBlock();
     updateSlots();
+    updateScore();
     //reset UI
-    document.querySelector(".endMessage").innerText = "00:00"; 
-    document.querySelector(".score").innerText = "Score :" + score;
-    document.querySelector(".endGame").remove(); 
+    document.querySelector(".timeDisplay").innerText = "00:00"; 
+    if(document.querySelector(".endGame")) document.querySelector(".endGame").remove();
 }
 
 addBlock(); //call it twice so there are 2 blocks on the board
@@ -378,9 +395,12 @@ setInterval(displayTime, 1000);
 const body = document.body;
 body.addEventListener("keydown", (event) => {
     if(gameOver === false){
-        console.log(gameOver);
         switch(event.key){
             case "ArrowLeft":
+                moveLeft();
+                updateSlots();
+                break;
+            case "a":
                 moveLeft();
                 updateSlots();
                 break;
@@ -388,7 +408,15 @@ body.addEventListener("keydown", (event) => {
                 moveRight();
                 updateSlots();
                 break;
+            case "d":
+                moveRight();
+                updateSlots();
+                break;
             case "ArrowUp":
+                moveUp();
+                updateSlots();
+                break;
+            case "w":
                 moveUp();
                 updateSlots();
                 break;
@@ -396,11 +424,17 @@ body.addEventListener("keydown", (event) => {
                 moveDown();
                 updateSlots();
                 break;
+            case "s":
+                moveDown();
+                updateSlots();
+                break;
+            default:
+                return;
         }
         if(available === 0){
             //display game over message and set high score
-            if(score > highScore) highScore = score;
-            document.querySelector(".highScore").innerText = "High Score: " + highScore;
+            if(score > highScore) setHighScore(score);
+            document.querySelector(".highScore").innerText = "High Score: " + getHighScore();
 
             //add endGame element to HTML
             
@@ -417,6 +451,5 @@ body.addEventListener("keydown", (event) => {
         addBlock();
         updateSlots();
         updateScore();
-    }
-    
+    }  
 });
