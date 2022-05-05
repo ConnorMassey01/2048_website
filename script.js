@@ -67,6 +67,9 @@ var score = 0;
 var highScore = 0;
 //boolean value to state if the game is over
 var gameOver = false;
+//variable to keep track of time passed
+var secondElapsed = 0;
+var minutesElapsed = 0;
 //map 2D grid coordinates to array index
 var positionMap2D = [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]];
 
@@ -143,7 +146,7 @@ function addBlock(){
     openSlots[available-1] = pos;
     available--;
 
-    //set block 'pos' to be visable
+    //set block 'pos' to be visible
     gameBlocks[pos].style.opacity = 1;
 
     //add 2 with 75% chance, 4 with 20% chance, 8 with 5% chance
@@ -311,7 +314,11 @@ function moveRight(){
 }
 
 function resetGame(){
+    //reset score to 0
     score = 0;
+    //reset timer to 0:00
+    secondElapsed = 0;
+    minutesElapsed = 0;
     //set all blocks to be available
     available = NUMBLOCKS;
     //all open slots stored before position 'available'
@@ -328,8 +335,10 @@ function resetGame(){
     updateSlots();  
     addBlock();
     updateSlots();
-    document.querySelector(".endMessage").innerText = ""; 
+    //reset UI
+    document.querySelector(".endMessage").innerText = "00:00"; 
     document.querySelector(".score").innerText = "Score :" + score;
+    document.querySelector(".endGame").remove(); 
 }
 
 addBlock(); //call it twice so there are 2 blocks on the board
@@ -337,6 +346,33 @@ updateSlots();
 addBlock();
 updateSlots();
 updateScore();
+
+//timer function
+function displayTime(){
+    if(gameOver === false){
+        secondElapsed ++;
+        if(secondElapsed > 60){
+            secondElapsed = 0;
+            minutesElapsed ++;
+        }
+        //format the time
+        if(secondElapsed < 10) secondElapsed = '0' + secondElapsed;  
+    }
+    //if away for too long, tell them to come back
+    if(minutesElapsed > 59){
+        document.querySelector(".timeDisplay").innerText = "Come back and play";
+    }
+    //display time as 00:00 (minutes, seconds)
+    else{
+        if(minutesElapsed < 10){
+            document.querySelector(".timeDisplay").innerText = "0" + minutesElapsed + ":" + secondElapsed; 
+        }
+        else{
+            document.querySelector(".timeDisplay").innerText = minutesElapsed + ":" + secondElapsed; 
+        }
+    }
+}
+setInterval(displayTime, 1000);
 
 //Events on key inputs
 const body = document.body;
@@ -365,9 +401,16 @@ body.addEventListener("keydown", (event) => {
             //display game over message and set high score
             if(score > highScore) highScore = score;
             document.querySelector(".highScore").innerText = "High Score: " + highScore;
-            document.querySelector(".endMessage").innerText = "Game Over"; 
+
+            //add endGame element to HTML
+            
+            let gameEnded = document.createElement("div");
+            gameEnded.classList.add("endGame");
+            gameEnded.innerHTML = `<div class = "endMessage">Game Over</div>`;
+            body.append(gameEnded);
+            
+
             gameOver = true;
-            console.log("game over!");
             return;
         }
     
