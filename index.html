@@ -10,15 +10,19 @@
   <body>
     <h1>2048 Game</h1>
     <div class = "gameStats">
-        <div class = "score"></div> 
-        <div class = "highScore">High Score: 0</div>
+      <div class = "score"></div> 
+      <div class = "highScore"></div>
     </div>
-    <div class = "gameOver">
-        <div class = "endMessage"></div>
-        <div class = "reset">
-            <button class="resetButton" onclick="resetGame()">New Game</button>
-        </div>
+    <div class = "timer">
+      <div class = "timeDisplay">00:00</div>
+      <div class = "reset">
+        <button class="resetButton" onclick="resetGame()">New Game</button>
+      </div>
     </div>
     <main class="game"> </main>
+    <div class = "instructions">
+      <button class="instructionButton" onclick="displayInstructions()">How to play</button>
+      <div class = "instructionText"></div>
+    </div>
   </body>
 </html>
