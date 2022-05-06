@@ -36,6 +36,34 @@ function setUpBlocks(){
      return blockHTML;
 }
 
+function displayInstructions(){
+    let text = document.querySelector(".instructionText").innerText;
+    console.log(text);
+    if(text === ""){
+        document.querySelector(".instructionButton").innerText = "Close";
+        document.querySelector(".instructionText").innerHTML = 
+        `
+        <ul>
+            <li>Use the arrow keys to slide the blocks across the game board</li>
+            <li>Combine blocks of the same value to score points</li>
+            <li>
+                After each move, a block will be added at random position
+                <ul>
+                    <li>Value 2: 75% chance</li>
+                    <li>Value 4: 20% chance</li>
+                    <li>Value 8: 5% chance</li>
+                </ul>
+            </li>
+            <li>If you are not able to move any blocks the game is over</li>
+            <li>Good luck!</li>
+        </ul>
+        `;
+    } else {
+        document.querySelector(".instructionButton").innerText = "How to play";
+        document.querySelector(".instructionText").innerText = "";
+    }
+}
+
 //set up the game and get variables for website objects
 let gameGrid = document.createElement("ul");
 gameGrid.classList.add("grid");
@@ -451,5 +479,5 @@ body.addEventListener("keydown", (event) => {
         addBlock();
         updateSlots();
         updateScore();
-    }  
+    }
 });
