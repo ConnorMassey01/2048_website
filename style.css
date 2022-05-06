@@ -21,12 +21,12 @@ h1{
     font-weight: bold;
 }
 
-.gameOver{
+.timer{
     margin: auto;
     width: 26.5rem;
     display:flex;
 }
-.endMessage{
+.timeDisplay{
     width: 50%;
     float: left;
     font-size: 1.5rem;
@@ -40,10 +40,12 @@ h1{
     font-weight: bold;
 }
 .resetButton{
-    border: none;
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 0.4rem;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
     background-color:rgb(255, 0, 0);
     width: 8rem;
     height: 1.8rem;
@@ -51,8 +53,6 @@ h1{
 .resetButton:hover{
     opacity: 0.7;
 }
-
-
 
 .game{
     margin: 0;
@@ -89,3 +89,50 @@ h1{
     width: 5rem;
     height: 5rem;
 }
+
+.endGame{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.endMessage{
+    display: block;
+    position: absolute;
+    top: 20rem;
+    font-size: 4rem;
+    padding: 0.2rem;
+    background-color: rgb(255, 0, 0);
+    border: 3px;
+    border-color: black;
+    border-style: solid;
+}
+
+.instructions{
+    margin: auto;
+    margin-top: 28rem;
+    display: flex;
+    width: 28rem;
+    justify-content: left;
+    align-items: left;
+}
+
+.instructionButton{
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.4rem;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    background-color: cadetblue;
+    width: 6.7rem;
+    height: 1.6rem;
+    margin-left: 0.75rem;
+}
+
+.instructionText{
+    position: absolute;
+    margin-top: 1.6rem;
+    padding: 0;
+}
+
